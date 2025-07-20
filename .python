@@ -1,0 +1,121 @@
+.python
+
+
+# src/narratis/core/narrative_processor.py
+from dataclasses import dataclass
+from enum import Enum
+from typing import Dict, List, Optional, Tuple
+import numpy as np
+from scipy.stats import entropy
+
+class NarrativeType(Enum):
+    RDN = "Rotational Disc Narrative"
+    SFN = "Solid-State Flash Narrative"
+    QSN = "Quantum Storage Narrative"
+    NNN = "Neural Network Narrative"
+
+@dataclass
+class NarrativeMetrics:
+    """Metrics for narrative analysis"""
+    complexity: float  # 0-1 scale of narrative complexity
+    coherence: float  # 0-1 scale of narrative coherence
+    momentum: float   # 0-1 scale of narrative momentum
+    entropy: float    # Information entropy of the narrative
+
+@dataclass
+class ConsciousnessEffect:
+    """Measured consciousness effects"""
+    immersion: float     # 0-1 scale of reader immersion
+    engagement: float    # 0-1 scale of reader engagement
+    retention: float     # 0-1 scale of memory retention probability
+    emotional_impact: float  # -1 to 1 scale of emotional valence
+
+class NarrativeProcessor:
+    def __init__(self):
+        self.current_narrative_type: Optional[NarrativeType] = None
+        self.consciousness_state: Dict = {}
+        self._initialize_processing_matrices()
+    
+    def _initialize_processing_matrices(self):
+        """Initialize the processing matrices for narrative analysis"""
+        self.transition_matrix = np.zeros((4, 4))  # State transition probabilities
+        self.effect_matrix = np.zeros((4, 4))      # Effect strength mappings
+        self.coherence_vector = np.zeros(4)        # Narrative coherence measurements
+    
+    def process_narrative(self, text: str) -> Dict:
+        """
+        Process input text and determine narrative characteristics.
+        
+        Args:
+            text (str): Input narrative text
+            
+        Returns:
+            Dict containing narrative analysis results
+        """
+        # Phase 1: Narrative Form Detection
+        narrative_type = self._detect_narrative_form(text)
+        
+        # Phase 2: Metrics Calculation
+        metrics = self._calculate_metrics(text)
+        
+        # Phase 3: Consciousness Effect Prediction
+        effects = self._predict_consciousness_effects(text, metrics)
+        
+        # Phase 4: Optimization Suggestions
+        optimizations = self._generate_optimization_suggestions(metrics, effects)
+        
+        return {
+            'type': narrative_type,
+            'metrics': metrics.__dict__,
+            'effects': effects.__dict__,
+            'optimizations': optimizations
+        }
+    
+    def _detect_narrative_form(self, text: str) -> NarrativeType:
+        """
+        Detect the narrative form type using advanced pattern recognition.
+        
+        Algorithm:
+        1. Calculate structural metrics
+        2. Analyze temporal patterns
+        3. Evaluate access patterns
+        4. Apply classification rules
+        """
+        # Structural analysis
+        structure_vector = self._analyze_structure(text)
+        
+        # Temporal pattern analysis
+        temporal_vector = self._analyze_temporal_patterns(text)
+        
+        # Access pattern analysis
+        access_vector = self._analyze_access_patterns(text)
+        
+        # Combined feature vector
+        features = np.concatenate([structure_vector, temporal_vector, access_vector])
+        
+        # Classification using pre-defined rules
+        return self._classify_narrative_type(features)
+    
+    def _analyze_structure(self, text: str) -> np.ndarray:
+        """Analyze narrative structure returning a feature vector"""
+        words = text.split()
+        sentences = text.split('.')
+        
+        # Calculate structural features
+        avg_sentence_length = len(words) / len(sentences)
+        complexity_score = self._calculate_complexity(text)
+        coherence_score = self._calculate_coherence(sentences)
+        
+        return np.array([avg_sentence_length, complexity_score, coherence_score])
+    
+    def _calculate_complexity(self, text: str) -> float:
+        """Calculate narrative complexity score"""
+        # Implementation of complexity calculation
+        words = text.split()
+        unique_words = set(words)
+        return len(unique_words) / len(words)  # Type-token ratio
+    
+    def _calculate_coherence(self, sentences: List[str]) -> float:
+        """Calculate narrative coherence score"""
+        # Implementation of coherence calculation using cosine similarity
+        pass

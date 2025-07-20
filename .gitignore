@@ -1,3 +1,93 @@
 # Build folder and log file
 build/
 build.log
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.env/
+.venv/
+.python-version
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+nosetests.xml
+coverage/
+
+# Documentation
+docs/_build/
+docs/api/
+_autosummary/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# OS specific
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.temp
+
+# Project specific
+logs/
+data/
+*.log
+*.db
+*.sqlite3
+models/
+checkpoints/
+.env
+.secrets
+config.local.yml
+
+# NARRATIS specific
+consciousness_cache/
+narrative_states/
+effect_matrices/
+*.consciousness
+*.narrative

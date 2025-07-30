@@ -105,6 +105,7 @@ setup_directories() {
         config/nginx \
         config/supervisor \
         config/docker \
+        config/systemd \
         logs \
         scripts \
         data/models \

@@ -25,3 +25,4 @@ msgpack==1.0.7
 # Development & Testing - The Reality Debuggers
 pytest==7.4.3
 black==23.11.0
+openai==1.30.5

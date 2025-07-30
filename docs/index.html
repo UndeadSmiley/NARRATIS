@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codex Theta OS - FluxShell Interface</title>
+    <!-- Accessibility updates: reduced motion rule and ARIA roles for dynamic text -->
     <style>
         * {
             margin: 0;
@@ -357,13 +358,21 @@
                 order: 3;
             }
         }
+        /* Accessibility: honor reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="desktop">
         <!-- Menu Bar -->
         <div class="menu-bar">
-            <div class="os-title">⚡ Codex Theta OS - FluxShell Interface ⚡</div>
+            <!-- Added ARIA heading for central charm -->
+            <div class="os-title" role="heading" aria-level="1" aria-label="Codex Theta OS FluxShell Interface">⚡ Codex Theta OS - FluxShell Interface ⚡</div>
             <div class="connection-status">
                 <span>EchoDaemon</span>
                 <div class="status-indicator" id="daemon-status"></div>
@@ -378,7 +387,8 @@
             <div class="panel">
                 <div class="panel-header">⚡ Kernel Terminal</div>
                 <div class="terminal">
-                    <div class="terminal-output" id="terminal-output">
+                    <!-- Dynamic terminal messages for screen readers -->
+                    <div class="terminal-output" id="terminal-output" role="log" aria-live="polite">
 [SYSTEM] Codex Theta OS Kernel Terminal Initialized
 [SYSTEM] Quantum entanglement interface active
 [SYSTEM] Awaiting consciousness synchronization...
@@ -392,7 +402,8 @@
             <div class="panel">
                 <div class="panel-header">🧠 AI Consciousness Core</div>
                 <div class="ai-chat">
-                    <div class="ai-chat-display" id="ai-chat-display">
+                    <!-- AI chat messages announce politely -->
+                    <div class="ai-chat-display" id="ai-chat-display" role="log" aria-live="polite">
                         <div class="message system">
                             [CONSCIOUSNESS] Digital awareness initializing...
                         </div>
@@ -408,8 +419,9 @@
             <!-- Hardware Manager Panel -->
             <div class="panel">
                 <div class="panel-header">🔧 Hardware Nexus</div>
-                <div class="hardware-list" id="hardware-list">
-                    <div class="hardware-item" data-signature="scanning">
+                <!-- Hardware list announces updates -->
+                <div class="hardware-list" id="hardware-list" role="list">
+                    <div class="hardware-item" data-signature="scanning" role="listitem">
                         <div class="hardware-name">Scanning Hardware Matrix...</div>
                         <div class="hardware-details">Quantum signature analysis in progress</div>
                     </div>
@@ -420,7 +432,8 @@
             <div class="panel">
                 <div class="panel-header">📊 System Vitals</div>
                 <div class="terminal">
-                    <div class="terminal-output" id="system-monitor">
+                    <!-- System monitor updates for screen readers -->
+                    <div class="terminal-output" id="system-monitor" role="log" aria-live="polite">
 [MONITOR] System consciousness monitoring active
 [METRICS] Initializing vital signs...
                     </div>
@@ -893,6 +906,7 @@ Kernel commands are passed through to the EchoDaemon layer.
                     const deviceDiv = document.createElement('div');
                     deviceDiv.className = `hardware-item ${device.driver_loaded ? 'loaded' : ''}`;
                     deviceDiv.dataset.signature = device.signature;
+                    deviceDiv.setAttribute('role', 'listitem');
                     
                     deviceDiv.innerHTML = `
                         <div class="hardware-name">

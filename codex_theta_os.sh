@@ -104,6 +104,7 @@ setup_directories() {
         frontend/templates \
         config/nginx \
         config/supervisor \
+        config/systemd \
         config/docker \
         logs \
         scripts \
@@ -344,6 +345,9 @@ EOF
 # ------- Create systemd service file for full system -------
 create_systemd_services() {
     log_step "Creating systemd service files..."
+
+    # Ensure directory exists
+    mkdir -p config/systemd
 
     cat > config/systemd/codex-theta-os.service << EOF
 [Unit]

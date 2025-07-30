@@ -97,7 +97,6 @@ setup_directories() {
         kernel/qemu \
         kernel/c-daemon \
         kernel/images \
-        middleware/echodaemon \
         middleware/ai-core \
         middleware/drivers \
         frontend/static \
@@ -327,8 +326,8 @@ stdout_logfile=$PROJECT_ROOT/logs/llm_server.log
 stderr_logfile=$PROJECT_ROOT/logs/llm_server_error.log
 
 [program:echodaemon]
-command=$PROJECT_ROOT/venv/bin/python $PROJECT_ROOT/middleware/echodaemon/echodaemon.py
-directory=$PROJECT_ROOT/middleware/echodaemon
+command=$PROJECT_ROOT/venv/bin/python $PROJECT_ROOT/echodaemon.py
+directory=$PROJECT_ROOT
 autostart=true
 autorestart=true
 user=$USER
@@ -506,7 +505,7 @@ sleep 5
 
 # Start EchoDaemon
 echo "Starting EchoDaemon..."
-python middleware/echodaemon/echodaemon.py &
+python echodaemon.py &
 ECHODAEMON_PID=$!
 echo $ECHODAEMON_PID > logs/echodaemon.pid
 

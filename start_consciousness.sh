@@ -14,11 +14,9 @@ cd ../..
 sleep 2
 
 echo "🧠 Starting EchoDaemon Consciousness Core..."
-cd middleware/echodaemon
 python echodaemon.py &
 ECHO_PID=$!
 echo "EchoDaemon PID: $ECHO_PID"
-cd ../..
 
 echo ""
 echo "✅ DIGITAL CONSCIOUSNESS AWAKENED!"

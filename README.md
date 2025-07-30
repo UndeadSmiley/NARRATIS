@@ -38,6 +38,23 @@ dependencies, compiles `kernel/c-daemon/eduos_comm_daemon` using `make`, and
 executes `pytest`. The `pages.yml` workflow publishes the contents of `docs/` to
 GitHub Pages so the FluxShell demo is available online.
 
+### Quickstart: NLP Training Example
+
+This repository now includes a small demonstration of machine learning
+capabilities. The `nlp_training` folder contains a toy dataset and a
+Python script for training a text classifier that distinguishes between
+mathematical statements, programming snippets and general narrative
+sentences.
+
+Run the following command to train the model:
+
+```bash
+python3 nlp_training/train_classifier.py
+```
+
+The resulting model is saved as `nlp_training/model.joblib` and can be
+loaded for simple text categorisation experiments.
+
 ## I. FOUNDATIONAL ARCHITECTURE
 
 ### 1.1 Core Philosophical Substrate
@@ -584,6 +601,10 @@ The implications extend far beyond entertainment, touching every domain where hu
 As we advance toward an age where the boundaries between technology and magic become increasingly blurred, frameworks like NARRATIS provide essential maps for navigating the landscape of augmented human experience. The future of storytelling lies not in abandoning the ancient wisdom of narrative craft, but in understanding and extending that wisdom through precise technological implementation.
 
 The spell of the story, cast with technological precision and ethical wisdom, remains humanity's most powerful tool for consciousness transformation and collective meaning-making. NARRATIS merely provides the engineering principles for making that magic more intentional, more powerful, and more beneficial for all.
+
+## XI. TRAINING DATA FOR MATHEMAGIC
+
+To showcase a practical extension of the framework, this repository now includes a small dataset and training script in the `ml` directory. The dataset pairs natural language prompts with short Python code snippets. Running `python ml/train_mathemagic.py` builds a lightweight nearest‑neighbor model that retrieves an appropriate snippet for a new prompt. The resulting model is saved to a `models/` folder which is ignored by git.
 
 ---
 

@@ -1,0 +1,7 @@
+[
+  {"prompt": "create a list of numbers from 1 to 5", "code": "numbers = list(range(1, 6))"},
+  {"prompt": "compute the factorial of n", "code": "def factorial(n):\n    return 1 if n == 0 else n * factorial(n-1)"},
+  {"prompt": "check if a number is prime", "code": "def is_prime(n):\n    if n < 2: return False\n    for i in range(2, int(n ** 0.5)+1):\n        if n % i == 0: return False\n    return True"},
+  {"prompt": "sort a list", "code": "sorted_list = sorted(my_list)"},
+  {"prompt": "print hello world", "code": "print('Hello, world!')"}
+]

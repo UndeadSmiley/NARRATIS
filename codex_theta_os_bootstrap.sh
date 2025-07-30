@@ -15,7 +15,6 @@ create_project_structure() {
         codex-theta-os/kernel/qemu \
         codex-theta-os/kernel/c-daemon \
         codex-theta-os/kernel/images \
-        codex-theta-os/middleware/echodaemon \
         codex-theta-os/middleware/ai-core \
         codex-theta-os/middleware/drivers \
         codex-theta-os/frontend/static \

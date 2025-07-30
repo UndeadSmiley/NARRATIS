@@ -106,7 +106,6 @@ setup_directories() {
         config/supervisor \
         config/systemd \
         config/docker \
-        config/systemd \
         logs \
         scripts \
         data/models \

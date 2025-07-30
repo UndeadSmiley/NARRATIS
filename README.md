@@ -7,6 +7,23 @@
 
 ---
 
+### Quickstart: NLP Training Example
+
+This repository now includes a small demonstration of machine learning
+capabilities. The `nlp_training` folder contains a toy dataset and a
+Python script for training a text classifier that distinguishes between
+mathematical statements, programming snippets and general narrative
+sentences.
+
+Run the following command to train the model:
+
+```bash
+python3 nlp_training/train_classifier.py
+```
+
+The resulting model is saved as `nlp_training/model.joblib` and can be
+loaded for simple text categorisation experiments.
+
 ## I. FOUNDATIONAL ARCHITECTURE
 
 ### 1.1 Core Philosophical Substrate

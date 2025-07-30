@@ -76,6 +76,8 @@ Thumbs.db
 # Project specific
 logs/
 data/
+!nlp_training/data/
+nlp_training/model.joblib
 *.log
 *.db
 *.sqlite3

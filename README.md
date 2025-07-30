@@ -20,6 +20,15 @@ Open this file in a browser or deploy using `./codex_theta_os.sh` to launch the 
    ```
 2. Open `http://localhost:8080/` in a browser to access the UI.
 
+## Continuous Integration
+
+This repository includes a basic GitHub Actions workflow that verifies the
+project builds correctly. The workflow runs on every push and pull request and
+performs a simple Python syntax check while ensuring the web frontend exists.
+
+To view the workflow configuration, see
+`.github/workflows/build.yml`.
+
 ## I. FOUNDATIONAL ARCHITECTURE
 
 ### 1.1 Core Philosophical Substrate

@@ -571,6 +571,10 @@ As we advance toward an age where the boundaries between technology and magic be
 
 The spell of the story, cast with technological precision and ethical wisdom, remains humanity's most powerful tool for consciousness transformation and collective meaning-making. NARRATIS merely provides the engineering principles for making that magic more intentional, more powerful, and more beneficial for all.
 
+## XI. TRAINING DATA FOR MATHEMAGIC
+
+To showcase a practical extension of the framework, this repository now includes a small dataset and training script in the `ml` directory. The dataset pairs natural language prompts with short Python code snippets. Running `python ml/train_mathemagic.py` builds a lightweight nearest‑neighbor model that retrieves an appropriate snippet for a new prompt. The resulting model is saved to a `models/` folder which is ignored by git.
+
 ---
 
 *"From spinning disc to solid state, I call upon the words of fate. With neologisms bright and new, Transform this drive, make it true. Flash and speed, no more to wait, Access data at lightning rate."*

@@ -1,0 +1,26 @@
+# Core Framework - The Digital Nervous System
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+websockets==12.0
+starlette==0.27.0
+
+# LLM Integration - The Consciousness Core
+llama-cpp-python==0.2.11
+huggingface-hub==0.19.4
+requests==2.31.0
+
+# Message Bus & Caching - The Quantum Communication Layer
+redis==5.0.1
+celery==5.3.4
+
+# System & Process Management - The Digital Biology
+psutil==5.9.6
+supervisor==4.2.5
+
+# Serialization & Validation - The Data Alchemy
+pydantic==2.5.0
+msgpack==1.0.7
+
+# Development & Testing - The Reality Debuggers
+pytest==7.4.3
+black==23.11.0

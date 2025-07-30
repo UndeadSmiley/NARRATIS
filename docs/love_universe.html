@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Universe</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a0020, #000);
+            height: 100vh;
+        }
+        .star, .heart {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            animation: fadeOut 5s forwards;
+        }
+        .star {
+            color: #fff;
+            font-size: 12px;
+        }
+        .heart {
+            color: #ff69b4;
+            font-size: 20px;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+    </style>
+</head>
+<body>
+<script>
+const maxHearts = 30;
+const maxStars = 60;
+let heartCount = 0;
+let starCount = 0;
+
+function createElement(type, x, y) {
+    if (type === 'heart' && heartCount >= maxHearts) return;
+    if (type === 'star' && starCount >= maxStars) return;
+
+    const el = document.createElement('div');
+    el.className = type;
+    el.textContent = type === 'heart' ? '❤' : '✦';
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+
+    document.body.appendChild(el);
+
+    if (type === 'heart') heartCount++; else starCount++;
+
+    setTimeout(() => {
+        el.remove();
+        if (type === 'heart') heartCount--; else starCount--;
+    }, 5000);
+}
+
+function randomPosition() {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    return {x, y};
+}
+
+function spawnRandom() {
+    const {x, y} = randomPosition();
+    createElement(Math.random() > 0.5 ? 'heart' : 'star', x, y);
+}
+
+setInterval(spawnRandom, 300);
+
+window.addEventListener('click', (e) => {
+    createElement('heart', e.clientX, e.clientY);
+});
+</script>
+</body>
+</html>

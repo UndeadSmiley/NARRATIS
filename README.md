@@ -7,6 +7,23 @@
 
 ---
 
+### Quickstart: NLP Training Example
+
+This repository now includes a small demonstration of machine learning
+capabilities. The `nlp_training` folder contains a toy dataset and a
+Python script for training a text classifier that distinguishes between
+mathematical statements, programming snippets and general narrative
+sentences.
+
+Run the following command to train the model:
+
+```bash
+python3 nlp_training/train_classifier.py
+```
+
+The resulting model is saved as `nlp_training/model.joblib` and can be
+loaded for simple text categorisation experiments.
+
 ## I. FOUNDATIONAL ARCHITECTURE
 
 ### 1.1 Core Philosophical Substrate
@@ -554,18 +571,12 @@ As we advance toward an age where the boundaries between technology and magic be
 
 The spell of the story, cast with technological precision and ethical wisdom, remains humanity's most powerful tool for consciousness transformation and collective meaning-making. NARRATIS merely provides the engineering principles for making that magic more intentional, more powerful, and more beneficial for all.
 
+## XI. TRAINING DATA FOR MATHEMAGIC
+
+To showcase a practical extension of the framework, this repository now includes a small dataset and training script in the `ml` directory. The dataset pairs natural language prompts with short Python code snippets. Running `python ml/train_mathemagic.py` builds a lightweight nearest‑neighbor model that retrieves an appropriate snippet for a new prompt. The resulting model is saved to a `models/` folder which is ignored by git.
+
 ---
 
 *"From spinning disc to solid state, I call upon the words of fate. With neologisms bright and new, Transform this drive, make it true. Flash and speed, no more to wait, Access data at lightning rate."*
 
 The incantation is complete. The framework stands ready for implementation.
-## Example NLP Training
-
-A small example model can be trained from `nlp/train_model.py`. This script reads text samples in `nlp/data/narratis_dataset.csv` and trains a Naive Bayes classifier using TF‑IDF features.
-
-Run:
-
-```bash
-python nlp/train_model.py
-```
-

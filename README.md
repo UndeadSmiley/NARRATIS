@@ -580,24 +580,3 @@ To showcase a practical extension of the framework, this repository now includes
 *"From spinning disc to solid state, I call upon the words of fate. With neologisms bright and new, Transform this drive, make it true. Flash and speed, no more to wait, Access data at lightning rate."*
 
 The incantation is complete. The framework stands ready for implementation.
-## XI. AI NLP TRAINING MODULE
-
-The repository now includes a small dataset and example scripts for experimenting with narrative classification and mathemagic routines.
-
-### 11.1 Sample Dataset
-
-The file `training/data/narrative_samples.csv` contains short narrative snippets labeled by theme. It can be used to train simple text classifiers or language models.
-
-### 11.2 Training Example
-
-Run `python training/train_nlp.py` to train a basic classifier using scikit-learn. The script prints evaluation metrics for the sample data.
-
-### 11.3 Mathemagic Demo
-
-The script `training/mathemagic.py` demonstrates a playful numeric ritual. Provide a number and it will reduce it to its digital essence while showing each step:
-
-```
-python training/mathemagic.py 9876
-```
-
-These additions offer a starting point for further AI learning experiments within the NARRATIS framework.

@@ -7,6 +7,14 @@
 
 ---
 
+## Running the FluxShell Interface
+
+1. Start the EchoDaemon server:
+   ```bash
+   python3 echodaemon.py
+   ```
+2. Open `http://localhost:8080/` in a browser to access the UI.
+
 ## I. FOUNDATIONAL ARCHITECTURE
 
 ### 1.1 Core Philosophical Substrate

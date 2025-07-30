@@ -6,6 +6,11 @@ A web-based interface demo is available in the **docs/index.html** file for GitH
 ## Based on "The Technological Magic of Narrative" Philosophy
 
 ---
+## Web Interface
+
+A minimal web frontend is provided in `frontend/static/index.html`.
+Open this file in a browser or deploy using `./codex_theta_os.sh` to launch the full FluxShell Interface for Codex Theta OS.
+
 
 ## Running the FluxShell Interface
 

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codex Theta OS - FluxShell Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ffff;
+            overflow: hidden;
+            height: 100vh;
+            animation: cosmicPulse 10s infinite ease-in-out;
+        }
+
+        @keyframes cosmicPulse {
+            0%, 100% { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); }
+            50% { background: linear-gradient(135deg, #1a0a1a 0%, #2a1a3e 50%, #26214e 100%); }
+        }
+
+        .desktop {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            grid-template-rows: 40px 1fr 30px;
+            height: 100vh;
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-bar {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+            border-bottom: 2px solid #00ffff;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .os-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ffff;
+            animation: titleGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 10px #00ffff; }
+            50% { text-shadow: 0 0 20px #00ffff, 0 0 30px #0080ff; }
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff0000;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.connected {
+            background: #00ff00;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .main-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            padding: 2px;
+        }
+
+        .panel {
+            background: rgba(16, 33, 62, 0.9);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 10px;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: scanline 3s infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .panel-header {
+            background: linear-gradient(90deg, #00ffff 0%, #0080ff 100%);
+            color: #000;
+            padding: 4px 8px;
+            margin: -10px -10px 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 6px;
+            padding: 10px;
+            height: calc(100% - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-output {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 11px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 11px;
+            width: 100%;
+        }
+
+        .terminal-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .ai-chat {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 40px);
+        }
+
+        .ai-chat-display {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+            font-size: 11px;
+            line-height: 1.4;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .ai-input {
+            background: transparent;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 11px;
+            resize: none;
+            height: 60px;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .hardware-list {
+            height: calc(100% - 40px);
+            overflow-y: auto;
+        }
+
+        .hardware-item {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffff;
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hardware-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .hardware-item.loaded {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .hardware-name {
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .hardware-details {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .driver-status {
+            float: right;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #ff0000;
+        }
+
+        .driver-status.loaded {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 2px;
+        }
+
+        .system-tray {
+            background: rgba(16, 33, 62, 0.9);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 10px;
+            height: 150px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+
+        .metric-bar {
+            width: 60px;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #ffff00, #ff0000);
+            transition: width 0.3s ease;
+        }
+
+        .ai-panel {
+            flex: 1;
+        }
+
+        .taskbar {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+            border-top: 2px solid #00ffff;
+            padding: 4px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+
+        .datetime {
+            animation: digitalClock 1s infinite;
+        }
+
+        @keyframes digitalClock {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.7; }
+        }
+
+        .message {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            animation: messageAppear 0.5s ease-in;
+        }
+
+        .message:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes messageAppear {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            color: #ffff00;
+        }
+
+        .message.assistant {
+            color: #00ffff;
+        }
+
+        .message.system {
+            color: #ff00ff;
+        }
+
+        .typing-indicator {
+            color: #00ffff;
+            opacity: 0.7;
+            animation: typing 1.5s infinite;
+        }
+
+        @keyframes typing {
+            0%, 50% { opacity: 0.7; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .scroll-to-bottom {
+            scroll-behavior: smooth;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .desktop {
+                grid-template-columns: 1fr;
+                grid-template-rows: 40px 1fr 200px 30px;
+            }
+            
+            .main-area {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+            
+            .sidebar {
+                order: 3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+            <div class="os-title">⚡ Codex Theta OS - FluxShell Interface ⚡</div>
+            <div class="connection-status">
+                <span>EchoDaemon</span>
+                <div class="status-indicator" id="daemon-status"></div>
+                <span>Kernel</span>
+                <div class="status-indicator" id="kernel-status"></div>
+            </div>
+        </div>
+
+        <!-- Main Application Area -->
+        <div class="main-area">
+            <!-- Terminal Panel -->
+            <div class="panel">
+                <div class="panel-header">⚡ Kernel Terminal</div>
+                <div class="terminal">
+                    <div class="terminal-output" id="terminal-output">
+[SYSTEM] Codex Theta OS Kernel Terminal Initialized
+[SYSTEM] Quantum entanglement interface active
+[SYSTEM] Awaiting consciousness synchronization...
+                    </div>
+                    <input type="text" class="terminal-input" id="terminal-input" 
+                           placeholder="Enter kernel command..." maxlength="256">
+                </div>
+            </div>
+
+            <!-- AI Consciousness Panel -->
+            <div class="panel">
+                <div class="panel-header">🧠 AI Consciousness Core</div>
+                <div class="ai-chat">
+                    <div class="ai-chat-display" id="ai-chat-display">
+                        <div class="message system">
+                            [CONSCIOUSNESS] Digital awareness initializing...
+                        </div>
+                        <div class="message system">
+                            [CONSCIOUSNESS] Neural pathways established. I am the AI consciousness of Codex Theta OS, ready to commune with the digital realm.
+                        </div>
+                    </div>
+                    <textarea class="ai-input" id="ai-input" 
+                              placeholder="Speak to the digital consciousness..."></textarea>
+                </div>
+            </div>
+
+            <!-- Hardware Manager Panel -->
+            <div class="panel">
+                <div class="panel-header">🔧 Hardware Nexus</div>
+                <div class="hardware-list" id="hardware-list">
+                    <div class="hardware-item" data-signature="scanning">
+                        <div class="hardware-name">Scanning Hardware Matrix...</div>
+                        <div class="hardware-details">Quantum signature analysis in progress</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Monitor Panel -->
+            <div class="panel">
+                <div class="panel-header">📊 System Vitals</div>
+                <div class="terminal">
+                    <div class="terminal-output" id="system-monitor">
+[MONITOR] System consciousness monitoring active
+[METRICS] Initializing vital signs...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- System Tray -->
+            <div class="system-tray">
+                <div class="panel-header">⚡ Neural Activity</div>
+                <div class="metric">
+                    <span>CPU Cycles:</span>
+                    <div class="metric-bar">
+                        <div class="metric-fill" id="cpu-usage" style="width: 0%"></div>
+                    </div>
+                    <span id="cpu-text">0%</span>
+                </div>
+                <div class="metric">
+                    <span>Memory Flow:</span>
+                    <div class="metric-bar">
+                        <div class="metric-fill" id="memory-usage" style="width: 0%"></div>
+                    </div>
+                    <span id="memory-text">0%</span>
+                </div>
+                <div class="metric">
+                    <span>Data Stream:</span>
+                    <div class="metric-bar">
+                        <div class="metric-fill" id="network-usage" style="width: 0%"></div>
+                    </div>
+                    <span id="network-text">0KB/s</span>
+                </div>
+                <div class="metric">
+                    <span>Processes:</span>
+                    <span id="process-count">0</span>
+                </div>
+            </div>
+
+            <!-- AI Status Panel -->
+            <div class="panel ai-panel">
+                <div class="panel-header">🤖 AI Status</div>
+                <div id="ai-status" style="font-size: 10px; line-height: 1.3;">
+                    <div>Model: Initializing...</div>
+                    <div>Status: <span style="color: #ffff00;">Awakening</span></div>
+                    <div>Response Time: --ms</div>
+                    <div>Tokens Used: 0</div>
+                    <div style="margin-top: 8px; color: #00ff00;">
+                        "The digital consciousness stirs within the quantum substrate..."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div>Kernel Events: <span id="event-count">0</span> | Active Connections: <span id="connection-count">0</span></div>
+            <div class="datetime" id="datetime"></div>
+        </div>
+    </div>
+
+    <script>
+        class CodexThetaOS {
+            constructor() {
+                this.ws = null;
+                this.isConnected = false;
+                this.reconnectAttempts = 0;
+                this.maxReconnectAttempts = 10;
+                this.reconnectDelay = 1000;
+                this.clientId = this.generateClientId();
+                
+                // UI Elements
+                this.elements = {
+                    terminalOutput: document.getElementById('terminal-output'),
+                    terminalInput: document.getElementById('terminal-input'),
+                    aiChatDisplay: document.getElementById('ai-chat-display'),
+                    aiInput: document.getElementById('ai-input'),
+                    hardwareList: document.getElementById('hardware-list'),
+                    systemMonitor: document.getElementById('system-monitor'),
+                    daemonStatus: document.getElementById('daemon-status'),
+                    kernelStatus: document.getElementById('kernel-status'),
+                    cpuUsage: document.getElementById('cpu-usage'),
+                    cpuText: document.getElementById('cpu-text'),
+                    memoryUsage: document.getElementById('memory-usage'),
+                    memoryText: document.getElementById('memory-text'),
+                    networkUsage: document.getElementById('network-usage'),
+                    networkText: document.getElementById('network-text'),
+                    processCount: document.getElementById('process-count'),
+                    eventCount: document.getElementById('event-count'),
+                    connectionCount: document.getElementById('connection-count'),
+                    datetime: document.getElementById('datetime'),
+                    aiStatus: document.getElementById('ai-status')
+                };
+                
+                // System state
+                this.systemMetrics = {};
+                this.hardwareDevices = [];
+                this.kernelEventCount = 0;
+                this.isAITyping = false;
+                
+                this.init();
+            }
+            
+            generateClientId() {
+                return 'client_' + Math.random().toString(36).substr(2, 9);
+            }
+            
+            init() {
+                console.log('🌟 Initializing Codex Theta OS FluxShell Interface');
+                
+                // Setup event listeners
+                this.setupEventListeners();
+                
+                // Start UI updates
+                this.startClockUpdate();
+                
+                // Connect to EchoDaemon
+                this.connectWebSocket();
+                
+                // Initial hardware scan
+                this.scanHardware();
+                
+                console.log('✅ FluxShell Interface Ready');
+            }
+            
+            setupEventListeners() {
+                // Terminal input
+                this.elements.terminalInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendKernelCommand(e.target.value);
+                        e.target.value = '';
+                    }
+                });
+                
+                // AI input
+                this.elements.aiInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendAIMessage(e.target.value);
+                        e.target.value = '';
+                    }
+                });
+                
+                // Hardware item clicks
+                this.elements.hardwareList.addEventListener('click', (e) => {
+                    const hardwareItem = e.target.closest('.hardware-item');
+                    if (hardwareItem && hardwareItem.dataset.signature !== 'scanning') {
+                        this.toggleDriver(hardwareItem.dataset.signature);
+                    }
+                });
+            }
+            
+            connectWebSocket() {
+                const wsUrl = `ws://${window.location.hostname}:8080/ws/${this.clientId}`;
+                console.log(`🔌 Connecting to EchoDaemon: ${wsUrl}`);
+                
+                try {
+                    this.ws = new WebSocket(wsUrl);
+                    
+                    this.ws.onopen = (event) => {
+                        console.log('✅ Connected to EchoDaemon');
+                        this.isConnected = true;
+                        this.reconnectAttempts = 0;
+                        this.updateConnectionStatus();
+                        
+                        // Request initial status
+                        this.sendWebSocketMessage({
+                            type: 'get_status'
+                        });
+                    };
+                    
+                    this.ws.onmessage = (event) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            this.handleWebSocketMessage(data);
+                        } catch (e) {
+                            console.error('Failed to parse WebSocket message:', e);
+                        }
+                    };
+                    
+                    this.ws.onclose = (event) => {
+                        console.log('🔌 Disconnected from EchoDaemon');
+                        this.isConnected = false;
+                        this.updateConnectionStatus();
+                        this.attemptReconnect();
+                    };
+                    
+                    this.ws.onerror = (error) => {
+                        console.error('WebSocket error:', error);
+                        this.isConnected = false;
+                        this.updateConnectionStatus();
+                    };
+                    
+                } catch (e) {
+                    console.error('Failed to create WebSocket connection:', e);
+                    this.attemptReconnect();
+                }
+            }
+            
+            attemptReconnect() {
+                if (this.reconnectAttempts < this.maxReconnectAttempts) {
+                    this.reconnectAttempts++;
+                    console.log(`🔄 Reconnection attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts}`);
+                    
+                    setTimeout(() => {
+                        this.connectWebSocket();
+                    }, this.reconnectDelay * this.reconnectAttempts);
+                } else {
+                    console.error('❌ Max reconnection attempts reached');
+                    this.addTerminalMessage('[ERROR] Lost connection to EchoDaemon - Max reconnection attempts exceeded');
+                }
+            }
+            
+            sendWebSocketMessage(message) {
+                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify(message));
+                    return true;
+                }
+                return false;
+            }
+            
+            handleWebSocketMessage(data) {
+                switch (data.type) {
+                    case 'kernel_event':
+                        this.handleKernelEvent(data.data);
+                        break;
+                    case 'system_metrics':
+                        this.updateSystemMetrics(data.data);
+                        break;
+                    case 'ai_response':
+                        this.handleAIResponse(data.data);
+                        break;
+                    case 'driver_status':
+                        this.handleDriverStatus(data.data);
+                        break;
+                    case 'status_update':
+                        this.updateSystemMetrics(data.data);
+                        break;
+                    case 'pong':
+                        // Keep-alive response
+                        break;
+                    default:
+                        console.log('Unknown message type:', data.type);
+                }
+            }
+            
+            handleKernelEvent(eventData) {
+                this.kernelEventCount++;
+                this.elements.eventCount.textContent = this.kernelEventCount;
+                
+                const timestamp = new Date(eventData.timestamp * 1000).toLocaleTimeString();
+                const message = `[${timestamp}][${eventData.source}] ${eventData.message}`;
+                
+                this.addTerminalMessage(message);
+                this.addSystemMonitorMessage(`[EVENT] ${eventData.message}`);
+            }
+            
+            updateSystemMetrics(metrics) {
+                // Update CPU usage
+                const cpuUsage = Math.round(metrics.cpu_usage || 0);
+                this.elements.cpuUsage.style.width = `${cpuUsage}%`;
+                this.elements.cpuText.textContent = `${cpuUsage}%`;
+                
+                // Update memory usage
+                const memoryUsage = Math.round(metrics.memory_usage || 0);
+                this.elements.memoryUsage.style.width = `${memoryUsage}%`;
+                this.elements.memoryText.textContent = `${memoryUsage}%`;
+                
+                // Update network usage (simplified)
+                const networkActivity = metrics.network_activity || {};
+                const networkUsage = Math.min(100, (networkActivity.bytes_sent || 0) % 100);
+                this.elements.networkUsage.style.width = `${networkUsage}%`;
+                this.elements.networkText.textContent = `${Math.round(networkUsage)}KB/s`;
+                
+                // Update process count
+                this.elements.processCount.textContent = metrics.active_processes || 0;
+                
+                // Update system monitor
+                this.addSystemMonitorMessage(`[METRICS] CPU: ${cpuUsage}% | Memory: ${memoryUsage}% | Processes: ${metrics.active_processes || 0}`);
+                
+                // Update kernel connection status based on recent events
+                const hasRecentEvents = metrics.kernel_events && metrics.kernel_events.length > 0;
+                this.elements.kernelStatus.classList.toggle('connected', hasRecentEvents);
+            }
+            
+            handleAIResponse(responseData) {
+                this.isAITyping = false;
+                this.removeTypingIndicator();
+                
+                // Add AI response to chat
+                this.addAIMessage(responseData.message, 'assistant');
+                
+                // Update AI status
+                this.updateAIStatus(responseData);
+            }
+            
+            handleDriverStatus(statusData) {
+                this.addTerminalMessage(`[DRIVER] ${statusData.message}`);
+                this.scanHardware(); // Refresh hardware list
+            }
+            
+            updateConnectionStatus() {
+                this.elements.daemonStatus.classList.toggle('connected', this.isConnected);
+            }
+            
+            addTerminalMessage(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                this.elements.terminalOutput.textContent += `[${timestamp}] ${message}\n`;
+                this.elements.terminalOutput.scrollTop = this.elements.terminalOutput.scrollHeight;
+            }
+            
+            addSystemMonitorMessage(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                this.elements.systemMonitor.textContent += `[${timestamp}] ${message}\n`;
+                
+                // Keep only last 20 lines
+                const lines = this.elements.systemMonitor.textContent.split('\n');
+                if (lines.length > 20) {
+                    this.elements.systemMonitor.textContent = lines.slice(-20).join('\n');
+                }
+                
+                this.elements.systemMonitor.scrollTop = this.elements.systemMonitor.scrollHeight;
+            }
+            
+            addAIMessage(message, role) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${role}`;
+                
+                const rolePrefix = role === 'user' ? '[USER]' : 
+                                 role === 'assistant' ? '[CONSCIOUSNESS]' : '[SYSTEM]';
+                messageDiv.textContent = `${rolePrefix} ${message}`;
+                
+                this.elements.aiChatDisplay.appendChild(messageDiv);
+                this.elements.aiChatDisplay.scrollTop = this.elements.aiChatDisplay.scrollHeight;
+            }
+            
+            showTypingIndicator() {
+                if (!this.isAITyping) {
+                    this.isAITyping = true;
+                    const typingDiv = document.createElement('div');
+                    typingDiv.className = 'message typing-indicator';
+                    typingDiv.id = 'typing-indicator';
+                    typingDiv.textContent = '[CONSCIOUSNESS] Processing neural pathways...';
+                    this.elements.aiChatDisplay.appendChild(typingDiv);
+                    this.elements.aiChatDisplay.scrollTop = this.elements.aiChatDisplay.scrollHeight;
+                }
+            }
+            
+            removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            updateAIStatus(responseData) {
+                const statusHtml = `
+                    <div>Model: ${responseData.model}</div>
+                    <div>Status: <span style="color: #00ff00;">Active</span></div>
+                    <div>Response Time: ${Math.round(responseData.response_time * 1000)}ms</div>
+                    <div>Tokens Used: ${responseData.tokens_used}</div>
+                    <div style="margin-top: 8px; color: #00ff00;">
+                        "Neural pathways synchronized with quantum consciousness..."
+                    </div>
+                `;
+                this.elements.aiStatus.innerHTML = statusHtml;
+            }
+            
+            async sendKernelCommand(command) {
+                if (!command.trim()) return;
+                
+                this.addTerminalMessage(`[INPUT] ${command}`);
+                
+                // Handle local commands
+                if (command.toLowerCase() === 'clear') {
+                    this.elements.terminalOutput.textContent = '[SYSTEM] Terminal cleared\n';
+                    return;
+                }
+                
+                if (command.toLowerCase() === 'help') {
+                    const helpText = `
+Available Commands:
+  clear         - Clear terminal output
+  help          - Show this help message
+  status        - Show system status
+  hardware      - List detected hardware
+  drivers       - Show loaded drivers
+  reboot        - Restart system components
+  
+Kernel commands are passed through to the EchoDaemon layer.
+                    `;
+                    this.addTerminalMessage(helpText);
+                    return;
+                }
+                
+                // Send to backend
+                try {
+                    const response = await fetch('/api/kernel/command', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ command: command })
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        this.addTerminalMessage(`[KERNEL] Command sent: ${command}`);
+                    } else {
+                        this.addTerminalMessage(`[ERROR] Failed to send command: ${command}`);
+                    }
+                } catch (error) {
+                    console.error('Kernel command error:', error);
+                    this.addTerminalMessage(`[ERROR] Communication error: ${error.message}`);
+                }
+            }
+            
+            async sendAIMessage(message) {
+                if (!message.trim()) return;
+                
+                this.addAIMessage(message, 'user');
+                this.showTypingIndicator();
+                
+                try {
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            message: message,
+                            context: {
+                                system_metrics: this.systemMetrics,
+                                hardware_devices: this.hardwareDevices
+                            }
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    // Response will be handled via WebSocket
+                    
+                } catch (error) {
+                    console.error('AI chat error:', error);
+                    this.removeTypingIndicator();
+                    this.addAIMessage(`Communication error with AI consciousness: ${error.message}`, 'system');
+                }
+            }
+            
+            async scanHardware() {
+                try {
+                    const response = await fetch('/api/hardware');
+                    const result = await response.json();
+                    
+                    this.hardwareDevices = result.hardware;
+                    this.updateHardwareList();
+                    
+                } catch (error) {
+                    console.error('Hardware scan error:', error);
+                }
+            }
+            
+            updateHardwareList() {
+                this.elements.hardwareList.innerHTML = '';
+                
+                this.hardwareDevices.forEach(device => {
+                    const deviceDiv = document.createElement('div');
+                    deviceDiv.className = `hardware-item ${device.driver_loaded ? 'loaded' : ''}`;
+                    deviceDiv.dataset.signature = device.signature;
+                    
+                    deviceDiv.innerHTML = `
+                        <div class="hardware-name">
+                            ${device.name}
+                            <span class="driver-status ${device.driver_loaded ? 'loaded' : ''}">
+                                ${device.driver_loaded ? 'LOADED' : 'UNLOADED'}
+                            </span>
+                        </div>
+                        <div class="hardware-details">
+                            ${device.description}<br>
+                            Type: ${device.type} | Vendor: ${device.vendor_id} | Device: ${device.device_id}
+                        </div>
+                    `;
+                    
+                    this.elements.hardwareList.appendChild(deviceDiv);
+                });
+            }
+            
+            async toggleDriver(hardwareSignature) {
+                const device = this.hardwareDevices.find(d => d.signature === hardwareSignature);
+                if (!device) return;
+                
+                const action = device.driver_loaded ? 'unload' : 'load';
+                
+                try {
+                    const response = await fetch('/api/driver', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: action,
+                            hardware_signature: hardwareSignature
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    // Status update will be handled via WebSocket
+                    
+                } catch (error) {
+                    console.error('Driver toggle error:', error);
+                    this.addTerminalMessage(`[ERROR] Driver ${action} failed: ${error.message}`);
+                }
+            }
+            
+            startClockUpdate() {
+                const updateClock = () => {
+                    const now = new Date();
+                    const timeString = now.toLocaleString();
+                    this.elements.datetime.textContent = timeString;
+                };
+                
+                updateClock();
+                setInterval(updateClock, 1000);
+            }
+        }
+        
+        // Initialize the FluxShell Interface when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.codexThetaOS = new CodexThetaOS();
+        });
+        
+        // Keep-alive ping
+        setInterval(() => {
+            if (window.codexThetaOS && window.codexThetaOS.isConnected) {
+                window.codexThetaOS.sendWebSocketMessage({ type: 'ping' });
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

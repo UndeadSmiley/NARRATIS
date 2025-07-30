@@ -559,3 +559,13 @@ The spell of the story, cast with technological precision and ethical wisdom, re
 *"From spinning disc to solid state, I call upon the words of fate. With neologisms bright and new, Transform this drive, make it true. Flash and speed, no more to wait, Access data at lightning rate."*
 
 The incantation is complete. The framework stands ready for implementation.
+## Example NLP Training
+
+A small example model can be trained from `nlp/train_model.py`. This script reads text samples in `nlp/data/narratis_dataset.csv` and trains a Naive Bayes classifier using TF‑IDF features.
+
+Run:
+
+```bash
+python nlp/train_model.py
+```
+

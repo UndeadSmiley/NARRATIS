@@ -1,6 +1,6 @@
 # NARRATIS
 (Narrative Analysis through Technological-Magical Interpretive Systems)
-
+A web-based interface demo is available in the **docs/index.html** file for GitHub Pages.
 
 # NARRATIS: A Technological-Magical AI Framework for Narrative Analysis
 ## Based on "The Technological Magic of Narrative" Philosophy

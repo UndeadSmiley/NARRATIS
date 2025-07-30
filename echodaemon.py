@@ -687,7 +687,7 @@ async def health_check():
 
 def setup_logging():
     """Configure logging for the EchoDaemon"""
-    log_dir = Path("../logs")
+    log_dir = Path(__file__).parent / "logs"
     log_dir.mkdir(exist_ok=True)
     
     logging.basicConfig(

@@ -20,6 +20,14 @@ Open this file in a browser or deploy using `./codex_theta_os.sh` to launch the 
    ```
 2. Open `http://localhost:8080/` in a browser to access the UI.
 
+## Continuous Integration
+
+GitHub Actions workflows build the kernel daemon and run Python checks on every
+push or pull request targeting `main`. The `ci.yml` workflow installs
+dependencies, compiles `kernel/c-daemon/eduos_comm_daemon` using `make`, and
+executes `pytest`. The `pages.yml` workflow publishes the contents of `docs/` to
+GitHub Pages so the FluxShell demo is available online.
+
 ## I. FOUNDATIONAL ARCHITECTURE
 
 ### 1.1 Core Philosophical Substrate

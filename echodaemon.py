@@ -22,6 +22,7 @@ import psutil
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import uvicorn
 
@@ -490,6 +491,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve frontend static files
+FRONTEND_DIR = Path(__file__).resolve().parent / "frontend"
+app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
+
+
+@app.get("/")
+async def serve_frontend():
+    """Return the FluxShell web interface"""
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 # Background task to listen for kernel events
 async def kernel_event_listener():

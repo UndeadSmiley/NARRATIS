@@ -93,15 +93,23 @@ check_requirements() {
 setup_directories() {
     log_step "Setting up project directories..."
 
-    mkdir -p {
-        kernel/{qemu,c-daemon,images},
-        middleware/{echodaemon,ai-core,drivers},
-        frontend/{static,templates},
-        config/{nginx,supervisor,docker},
-        logs,
-        scripts,
-        data/{models,kernels,drivers}
-    }
+    mkdir -p \
+        kernel/qemu \
+        kernel/c-daemon \
+        kernel/images \
+        middleware/echodaemon \
+        middleware/ai-core \
+        middleware/drivers \
+        frontend/static \
+        frontend/templates \
+        config/nginx \
+        config/supervisor \
+        config/docker \
+        logs \
+        scripts \
+        data/models \
+        data/kernels \
+        data/drivers
 
     log_success "Directory structure created"
 }

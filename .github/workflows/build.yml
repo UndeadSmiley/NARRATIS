@@ -1,0 +1,20 @@
+name: Build
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Check Python syntax
+        run: python -m py_compile echodaemon.py
+      - name: Check bootstrap script syntax
+        run: bash -n codex_theta_os_bootstrap.sh
+      - name: Check orchestrator script syntax
+        run: bash -n codex_theta_os.sh

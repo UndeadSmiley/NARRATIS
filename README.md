@@ -14,11 +14,21 @@ Open this file in a browser or deploy using `./codex_theta_os.sh` to launch the 
 
 ## Running the FluxShell Interface
 
-1. Start the EchoDaemon server:
+1. Run the provided helper script to install dependencies, build the
+   C daemon and launch the server:
    ```bash
-   python3 echodaemon.py
+   ./scripts/run_local.sh
    ```
+   The script creates a `venv` directory if needed and then starts
+   `echodaemon.py`.
 2. Open `http://localhost:8080/` in a browser to access the UI.
+
+If you prefer a manual setup, run:
+```bash
+pip install -r requirements.txt
+make -C kernel/c-daemon
+python3 echodaemon.py
+```
 
 ## Continuous Integration
 

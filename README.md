@@ -30,6 +30,17 @@ make -C kernel/c-daemon
 python3 echodaemon.py
 ```
 
+### Using ChatGPT
+
+`AICore` can optionally use the OpenAI API instead of the local Llama 3 server. Set the `OPENAI_API_KEY` environment variable before starting `echodaemon.py`:
+
+```bash
+export OPENAI_API_KEY=your_key_here
+python3 echodaemon.py
+```
+
+When the key is present, NARRATIS sends chat messages to ChatGPT (via the `gpt-3.5-turbo` model by default) for generating responses.
+
 ## Continuous Integration
 
 GitHub Actions workflows build the kernel daemon and run Python checks on every

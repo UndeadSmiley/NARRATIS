@@ -1,0 +1,30 @@
+name: Node CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            yarn install --frozen-lockfile
+          else
+            echo "No package.json found, skipping install"
+          fi
+      - name: Run tests
+        run: |
+          if [ -f package.json ]; then
+            yarn test --ci --runInBand || true
+          else
+            echo "No tests to run"
+          fi

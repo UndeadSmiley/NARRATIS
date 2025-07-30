@@ -15,18 +15,23 @@ Open this file in a browser or deploy using `./codex_theta_os.sh` to launch the 
 ## Running the FluxShell Interface
 
 1. Run the provided helper script to install dependencies, build the
-   C daemon and launch the server:
+   C daemon, download a local LLM and launch the server:
    ```bash
    ./scripts/run_local.sh
    ```
    The script creates a `venv` directory if needed and then starts
-   `echodaemon.py`.
+   a small LLM server before launching `echodaemon.py`.
 2. Open `http://localhost:8080/` in a browser to access the UI.
 
 If you prefer a manual setup, run:
 ```bash
 pip install -r requirements.txt
 make -C kernel/c-daemon
+python - <<'EOF'
+from huggingface_hub import hf_hub_download
+hf_hub_download(repo_id='microsoft/DialoGPT-medium', filename='pytorch_model.bin', cache_dir='data/models')
+EOF
+python -m llama_cpp.server --model data/models/pytorch_model.bin --host 0.0.0.0 --port 8000 &
 python3 echodaemon.py
 ```
 

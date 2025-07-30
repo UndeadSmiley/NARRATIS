@@ -491,6 +491,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve the FluxShell frontend
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+
 # Background task to listen for kernel events
 async def kernel_event_listener():
     """Background task to continuously listen for kernel events"""

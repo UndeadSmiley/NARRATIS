@@ -559,3 +559,5 @@ The spell of the story, cast with technological precision and ethical wisdom, re
 *"From spinning disc to solid state, I call upon the words of fate. With neologisms bright and new, Transform this drive, make it true. Flash and speed, no more to wait, Access data at lightning rate."*
 
 The incantation is complete. The framework stands ready for implementation.
+## FluxShell Web Interface
+A web-based interface is provided in `frontend/index.html`. When the `echodaemon.py` service is running, navigate to `http://localhost:8080/` to access the FluxShell UI.

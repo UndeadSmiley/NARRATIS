@@ -3,6 +3,7 @@ fastapi==0.104.1
 uvicorn[standard]==0.24.0
 websockets==12.0
 starlette==0.27.0
+httpx==0.24.1
 
 # LLM Integration - The Consciousness Core
 llama-cpp-python==0.2.11

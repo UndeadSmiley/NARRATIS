@@ -2,13 +2,13 @@
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 websockets==12.0
-starlette==0.27.0
+starlette==0.47.2
 httpx==0.24.1
 
 # LLM Integration - The Consciousness Core
 llama-cpp-python==0.2.11
 huggingface-hub==0.19.4
-requests==2.31.0
+requests==2.32.4
 
 # Message Bus & Caching - The Quantum Communication Layer
 redis==5.0.1
@@ -24,5 +24,5 @@ msgpack==1.0.7
 
 # Development & Testing - The Reality Debuggers
 pytest==7.4.3
-black==23.11.0
+black==24.3.0
 openai==1.30.5

@@ -93,3 +93,9 @@ narrative_states/
 effect_matrices/
 *.consciousness
 *.narrative
+
+# Ignore build artifacts in c-daemon
+kernel/c-daemon/*
+!kernel/c-daemon/*.c
+!kernel/c-daemon/*.h
+!kernel/c-daemon/Makefile

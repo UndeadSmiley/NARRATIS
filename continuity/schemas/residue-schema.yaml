@@ -1,0 +1,61 @@
+type: residue_packet
+required:
+  - session_date
+  - session_context
+  - active_modes
+  - changes
+  - stable
+  - tensions
+  - opened_loops
+  - closed_loops
+  - artifacts_touched
+  - recommended_next_steps
+properties:
+  session_date:
+    type: string
+    format: date
+  session_context:
+    type: string
+  active_modes:
+    type: array
+    items:
+      type: string
+  changes:
+    type: array
+    items:
+      type: string
+  stable:
+    type: array
+    items:
+      type: string
+  tensions:
+    type: array
+    items:
+      type: string
+  opened_loops:
+    type: array
+    items:
+      type: string
+  closed_loops:
+    type: array
+    items:
+      type: string
+  artifacts_touched:
+    type: array
+    items:
+      type: string
+  recommended_next_steps:
+    type: array
+    items:
+      type: string
+  symbols_or_motifs:
+    type: array
+    items:
+      type: string
+  drift_notes:
+    type: array
+    items:
+      type: string
+notes:
+  - Residue packets are distillations, not transcript replacements.
+  - Durable changes belong in kernel or manifest files, not only in residue.
